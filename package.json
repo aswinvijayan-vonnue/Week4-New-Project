@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "eslint": "^10.7.0",
+    "live-server": "^1.2.2",
+    "prettier": "^3.9.5"
+  },
+  "scripts": {
+    "start": "live-server --entry-file=index.html"
+  }
+}
