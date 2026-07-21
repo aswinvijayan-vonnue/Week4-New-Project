@@ -1,0 +1,27 @@
+.hidden {
+  display: none;
+  justify-content: center;
+  color: red;
+}
+.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.movie-container {
+  margin: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 20px;
+  border: 1px solid black;
+  min-width: 300px;
+  min-height: 150px;
+  padding: 0px 12px;
+}
+.card {
+  border: 1px solid green;
+  padding: 10px;
+}

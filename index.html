@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/index.css" />
+    <script src="/js/main.js" type="module"></script>
+    <title>Movie Library</title>
+  </head>
+  <body>
+    <header>
+      <h1>Movie Library</h1>
+      <nav>
+        <a href="/" class="url-link">Home</a>
+        <a href="/settings" class="url-link">Settings</a>
+        <a href="/details" class="url-link">Details</a>
+        <a href="/movieList" class="url-link">Movies</a>
+      </nav>
+    </header>
+    <section id="home" class="hidden">
+      <h2>This is Home page</h2>
+    </section>
+    <section id="list" class="hidden">
+      <h2>This is movie list</h2>
+      <div class="movie-container">
+        <div class="card" id="101">Movie 1</div>
+        <div class="card" id="102">Movie 2</div>
+        <div class="card" id="103">Movie 3</div>
+        <div class="card" id="104">Movie 4</div>
+      </div>
+    </section>
+    <section id="settings" class="hidden">
+      <h2>This is the settings page</h2>
+    </section>
+    <section id="details" class="hidden">
+      <h2>This is movie details</h2>
+    </section>
+  </body>
+</html>
