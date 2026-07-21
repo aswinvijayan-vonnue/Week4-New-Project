@@ -1,48 +1,73 @@
-async function fetchFile(name) {
-  try {
-    const res = await fetch(name);
-    const text = await res.text();
+import { buttonComponent, cardComponent, modalComponent } from './components.js';
+import { store } from './store.js';
 
-    //parsing string into hidden html doc
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(text, 'text/html');
-
-    const bodyContent = doc.body.innerHTML;
-    return bodyContent;
-  } catch (err) {
-    console.error(err);
-  }
-  //   return new Promise((resolve,reject)=>)fetch(name).then((res) => console.log(res.text()));
-}
+let appContainer = document.querySelector('.appContainer');
 export function renderHome() {
-  document.querySelector('#home')?.classList.add('active');
-  const sections = document.querySelectorAll('section');
-  sections.forEach((section) => {
-    if (section.id !== 'home') section.classList.remove('active');
-  });
+  appContainer.innerHTML = '';
+  const home = document.querySelector('#home');
+  const clonedHome = home.cloneNode(true);
+  console.log(home);
+  appContainer.append(clonedHome);
 }
-
 export function renderList() {
-  document.querySelector('#list')?.classList.add('active');
-  const sections = document.querySelectorAll('section');
-  sections.forEach((section) => {
-    if (section.id !== 'list') section.classList.remove('active');
-  });
+  appContainer.innerHTML = '';
+  const but = buttonComponent();
+  but.className = 'add-but';
+  but.textContent = 'Add Movie';
+  console.log('button', but);
+
+  const overlayDiv = document.createElement('div');
+  overlayDiv.className = 'overlay';
+  const formEle = modalComponent();
+  const form = formEle.querySelector('form');
+  form.setAttribute('id', 'movieForm');
+  overlayDiv.append(formEle);
+
+  const { movies } = store.getState();
+  console.log('movies:', movies);
+
+  const movieList = document.querySelector('#list');
+  const clonedMovieList = movieList.cloneNode(true);
+  console.log(clonedMovieList);
+  appContainer.append(but, overlayDiv, clonedMovieList);
 }
 
 export function renderDetails(id = 'abc') {
-  document.querySelector('#details')?.classList.add('active');
-  const sections = document.querySelectorAll('section');
-  sections.forEach((section) => {
-    if (section.id !== 'details') section.classList.remove('active');
-  });
-  console.log('movie details of', id);
+  const info = store.getState();
+  const movieInfo = info.movies;
+  const selectedMovie = movieInfo.find((movie) => movie.id === id);
+  console.log('in render details', selectedMovie);
+  appContainer.innerHTML = '';
+  const originalDetails = document.querySelector('#details');
+  const clonedOriginalDetails = originalDetails.cloneNode(true);
+
+  const movie = clonedOriginalDetails.querySelector('.single-movie');
+  const movieTitle = movie.querySelector('.movieName');
+  movieTitle.textContent = selectedMovie.movie;
+
+  const movieYear = movie.querySelector('.single-movie-year');
+  movieYear.textContent = selectedMovie.year;
+
+  const poster = movie.querySelector('.moviePoster');
+  poster.setAttribute('src', selectedMovie.imgSrc);
+  movie.querySelector('.movieDesc').textContent = selectedMovie.description;
+  movie.querySelector('.directorName').textContent = selectedMovie.director;
+
+  clonedOriginalDetails.append(movie);
+  console.log(clonedOriginalDetails);
+  appContainer.append(clonedOriginalDetails);
 }
 
 export function renderSettings() {
-  document.querySelector('#settings')?.classList.add('active');
-  const sections = document.querySelectorAll('section');
-  sections.forEach((section) => {
-    if (section.id !== 'settings') section.classList.remove('active');
-  });
+  appContainer.innerHTML = '';
+  const settings = document.querySelector('#settings');
+  const clonedSettingsPage = settings.cloneNode(true);
+  const curState = store.getState();
+  console.log(curState);
+  if (curState.username) {
+    const userNamePtag = clonedSettingsPage.querySelector('.userName');
+    userNamePtag.textContent = curState.username;
+  }
+
+  appContainer.appendChild(clonedSettingsPage);
 }
