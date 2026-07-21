@@ -231,3 +231,30 @@ nav {
 .showForm {
   display: flex;
 }
+.remove-movie-button {
+  height: 30px;
+  border-radius: 6px;
+}
+
+.emptyMovie {
+  width: 100%;
+  font-size: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hidden {
+  display: none;
+}
+.fade-in-page {
+  opacity: 0;
+  animation: fadeIn 0.9s forwards;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -55,6 +55,7 @@ const movieCards = document.querySelectorAll('.card');
 movieContainer.addEventListener('click', (e) => {
   const addButton = movieContainer.querySelector('.add-but');
   const changeUserNameButton = movieContainer.querySelector('.changeUserName-button');
+  const removeMovieButton = movieContainer.querySelector('.remove-movie-button');
 
   if (e.target.closest('.overlay') !== null) {
     if (e.target.closest('.close-but')) {
@@ -63,24 +64,45 @@ movieContainer.addEventListener('click', (e) => {
       return;
     }
   }
-  if (e.target.closest('button') === addButton) {
-    const form = document.querySelector('.overlay');
-    if (!form) return;
-    form.classList.add('active');
-    return;
-  }
-  if (e.target.closest('button') === changeUserNameButton) {
-    console.log('clicked', changeUserNameButton);
-    const settingsDiv = e.target.closest('.user-info-container');
-    const changeForm = settingsDiv.querySelector('.changeUserNameForm');
-    console.log(changeForm);
-    changeForm.classList.add('showForm');
+  if (e.target.closest('button')) {
+    if (e.target.closest('button') === addButton) {
+      const form = document.querySelector('.overlay');
+      if (!form) return;
+      form.classList.add('active');
+      return;
+    } else if (e.target.closest('button') === changeUserNameButton) {
+      console.log('clicked', changeUserNameButton);
+      const settingsDiv = e.target.closest('.user-info-container');
+      const changeForm = settingsDiv.querySelector('.changeUserNameForm');
+      console.log(changeForm);
+      changeForm.classList.add('showForm');
+    } else if (e.target.closest('button') === removeMovieButton) {
+      const current = store.getState();
+      console.log('clicked', current.route.params.id);
+      store.dispatch({
+        type: 'DELETE_MOVIE',
+        payload: current.route.params.id,
+      });
+      const toPath = '/movieList';
+      history.pushState({}, '', toPath);
+      store.dispatch({
+        type: 'ROUTE_CHANGED',
+        payload: {
+          path: toPath,
+          params: {},
+        },
+      });
+
+      navigate(toPath);
+    }
   }
   if (e.target.closest('.movie') !== null) {
     const card = e.target.closest('.movie');
     const movieId = card.id;
     const allMovies = store.getState().movies;
-    console.log('clicked card', allMovies);
+    // const clickedMovie = allMovies.find((movie) => movie.id == card.id);
+    console.log('clicked card', movieId);
+    console.log(allMovies);
 
     const newPath = `/details/:${movieId}`;
     history.pushState({}, '', newPath);
@@ -99,14 +121,7 @@ movieContainer.addEventListener('click', (e) => {
 document.addEventListener('submit', (e) => {
   e.preventDefault();
   if (e.target.closest('#movieForm')) {
-    const form = document.querySelector('#movieForm');
-    const formData = new FormData(form);
-    const objData = Object.fromEntries(formData.entries());
-    console.log(objData);
-    form.reset();
-    const overlay = document.querySelector('.overlay');
-    overlay.classList.remove('active');
-    renderCard(objData);
+    addMovie();
   }
   if (e.target.closest('.changeUserNameForm')) {
     const form = e.target.closest('.changeUserNameForm');
@@ -126,6 +141,16 @@ document.addEventListener('submit', (e) => {
     form.reset();
   }
 });
+function addMovie() {
+  const form = document.querySelector('#movieForm');
+  const formData = new FormData(form);
+  const objData = Object.fromEntries(formData.entries());
+  console.log(objData);
+  form.reset();
+  const overlay = document.querySelector('.overlay');
+  overlay.classList.remove('active');
+  renderCard(objData);
+}
 
 function renderCard(data) {
   const card = cardComponent();
@@ -137,14 +162,11 @@ function renderCard(data) {
     type: 'CREATE_MOVIE',
     payload: { id: card.id, ...data, imgSrc: imgSrc },
   });
-
-  const movieName = card.querySelector('.movieName');
-  const movieYear = card.querySelector('.movieYear');
-  movieName.textContent = data.movie;
-  movieYear.textContent = data.year;
-  console.log(card);
-  const container = movieContainer.querySelector('.movies-container');
-
-  container.appendChild(card);
-  console.log(container);
+  renderList();
 }
+
+document.addEventListener('keydown', (e) => {
+  const form = document.querySelector('.overlay');
+  if (e.key === 'Enter' && form.classList.contains('active')) addMovie();
+  if (e.key === 'Escape' && form.classList.contains('active')) form.classList.remove('active');
+});

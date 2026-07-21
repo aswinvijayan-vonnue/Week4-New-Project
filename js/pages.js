@@ -23,11 +23,31 @@ export function renderList() {
   form.setAttribute('id', 'movieForm');
   overlayDiv.append(formEle);
 
-  const { movies } = store.getState();
-  console.log('movies:', movies);
-
   const movieList = document.querySelector('#list');
   const clonedMovieList = movieList.cloneNode(true);
+
+  const movieContainer = clonedMovieList.querySelector('.movies-container');
+  const { movies } = store.getState();
+  console.log('movies:', movies);
+  const emptyMovie = movieContainer.querySelector('.emptyMovie');
+
+  const oldCards = movieContainer.querySelectorAll('.movie');
+  oldCards.forEach((card) => card.remove());
+  if (movies && movies.length > 0) {
+    if (emptyMovie) emptyMovie.classList.add('hidden');
+    const card = cardComponent();
+
+    movies.forEach((movie) => {
+      const clonedCard = card.cloneNode(true);
+      clonedCard.setAttribute('id', movie.id);
+      clonedCard.querySelector('.movieName').textContent = movie.movie;
+      clonedCard.querySelector('.movieYear').textContent = movie.year;
+      movieContainer.append(clonedCard);
+    });
+  } else {
+    if (emptyMovie) emptyMovie.classList.remove('hidden');
+  }
+
   console.log(clonedMovieList);
   appContainer.append(but, overlayDiv, clonedMovieList);
 }
@@ -35,7 +55,7 @@ export function renderList() {
 export function renderDetails(id = 'abc') {
   const info = store.getState();
   const movieInfo = info.movies;
-  const selectedMovie = movieInfo.find((movie) => movie.id === id);
+  const selectedMovie = movieInfo?.find((movie) => movie.id === id);
   console.log('in render details', selectedMovie);
   appContainer.innerHTML = '';
   const originalDetails = document.querySelector('#details');

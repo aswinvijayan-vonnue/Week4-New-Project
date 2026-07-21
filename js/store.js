@@ -9,6 +9,7 @@ function createStore(initialState, reducer) {
       // Update state
       state = reducer(state, action);
       console.log('state', state);
+      localStorage.setItem('store', JSON.stringify(state));
       // Notify subscribers
       listeners.forEach((listener) => listener(state));
     },
@@ -44,12 +45,27 @@ function reducer(state, action) {
         ...state,
         username: action.payload,
       };
+    case 'DELETE_MOVIE':
+      const existingMovies = state.movies || [];
+      const updatedMovies = existingMovies.filter((movie) => movie.id !== action.payload);
+      return {
+        ...state,
+        movies: updatedMovies,
+      };
 
     default:
       return state;
   }
 }
-export const store = createStore(initialState, reducer);
+let instance = localStorage.getItem('store');
+console.log(instance);
+let baseState;
+if (instance) {
+  baseState = JSON.parse(instance);
+}
+export const store = instance
+  ? createStore(baseState, reducer)
+  : createStore(initialState, reducer);
 
 function onRouteChange(path, params) {
   store.dispatch({

@@ -17,6 +17,14 @@
       </nav>
     </header>
     <div class="pages hidden">
+      <div class="movie">
+        <img
+          src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/adventure-movie-poster-template-design-7b13ea2ab6f64c1ec9e1bb473f345547_screen.jpg?ts=1636999411"
+          alt=""
+        />
+        <p class="movieName">A Night in Casablanca</p>
+        <p class="movieYear">1989</p>
+      </div>
       <div class="form-container">
         <div class="formHead">
           <h3>Add Movie to the list</h3>
@@ -51,7 +59,7 @@
       <div class="detail-card">
         <h3>movieName</h3>
       </div>
-      <section id="home">
+      <section id="home" class="fade-in-page">
         <div class="landing-session">
           <h1>Welcome to Plex!</h1>
           <p class="desc">
@@ -110,27 +118,12 @@
           </div>
         </div>
       </section>
-      <section id="list">
+      <section id="list" class="fade-in-page">
         <div class="movies-container">
-          <div class="movie">
-            <img
-              src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/adventure-movie-poster-template-design-7b13ea2ab6f64c1ec9e1bb473f345547_screen.jpg?ts=1636999411"
-              alt=""
-            />
-            <p class="movieName">A Night in Casablanca</p>
-            <p class="movieYear">1989</p>
-          </div>
-          <div class="movie">
-            <img
-              src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/adventure-movie-poster-template-design-7b13ea2ab6f64c1ec9e1bb473f345547_screen.jpg?ts=1636999411"
-              alt=""
-            />
-            <p class="movieName">A Day at the Races</p>
-            <p class="movieYear">1937</p>
-          </div>
+          <div class="emptyMovie"><p>No Movies yet....</p></div>
         </div>
       </section>
-      <section id="settings">
+      <section id="settings" class="fade-in-page">
         <div class="user-info-container">
           <h2 class="userInformation-header">User Details</h2>
           <div class="user-container">
@@ -143,7 +136,7 @@
           </form>
         </div>
       </section>
-      <section id="details">
+      <section id="details" class="fade-in-page">
         <div class="single-movie">
           <h2 class="movieName">This is movie Name</h2>
           <p class="single-movie-year">1989</p>
@@ -153,6 +146,7 @@
             <div class="directorLabel">Director :</div>
             <p class="directorName">Abdullah</p>
           </div>
+          <button class="remove-movie-button">Remove From Library</button>
         </div>
       </section>
     </div>
