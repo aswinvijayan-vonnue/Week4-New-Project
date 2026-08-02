@@ -1,20 +1,19 @@
 import { buttonComponent, cardComponent, modalComponent } from './components.js';
 import { store } from './store.js';
 
-let appContainer = document.querySelector('.appContainer');
 export function renderHome() {
+  let appContainer = document.querySelector('.appContainer');
   appContainer.innerHTML = '';
   const home = document.querySelector('#home');
   const clonedHome = home.cloneNode(true);
-  console.log(home);
   appContainer.append(clonedHome);
 }
 export function renderList() {
+  let appContainer = document.querySelector('.appContainer');
   appContainer.innerHTML = '';
   const but = buttonComponent();
   but.className = 'add-but';
   but.textContent = 'Add Movie';
-  console.log('button', but);
 
   const overlayDiv = document.createElement('div');
   overlayDiv.className = 'overlay';
@@ -28,13 +27,17 @@ export function renderList() {
 
   const movieContainer = clonedMovieList.querySelector('.movies-container');
   const { movies } = store.getState();
-  console.log('movies:', movies);
+  console.log('hiiii', movies);
   const emptyMovie = movieContainer.querySelector('.emptyMovie');
 
   const oldCards = movieContainer.querySelectorAll('.movie');
   oldCards.forEach((card) => card.remove());
+  console.log('movies.length', movies?.length);
   if (movies && movies.length > 0) {
+    console.log('entered testttt', movies);
+    console.log('emptyyy', emptyMovie?.className);
     if (emptyMovie) emptyMovie.classList.add('hidden');
+    console.log('emptyyy2', emptyMovie?.className);
     const card = cardComponent();
 
     movies.forEach((movie) => {
@@ -48,14 +51,15 @@ export function renderList() {
     if (emptyMovie) emptyMovie.classList.remove('hidden');
   }
 
-  console.log(clonedMovieList);
   appContainer.append(but, overlayDiv, clonedMovieList);
 }
 
 export function renderDetails(id = 'abc') {
+  let appContainer = document.querySelector('.appContainer');
   const info = store.getState();
   const movieInfo = info.movies;
   const selectedMovie = movieInfo?.find((movie) => movie.id === id);
+  if (!selectedMovie) return false;
   console.log('in render details', selectedMovie);
   appContainer.innerHTML = '';
   const originalDetails = document.querySelector('#details');
@@ -74,16 +78,16 @@ export function renderDetails(id = 'abc') {
   movie.querySelector('.directorName').textContent = selectedMovie.director;
 
   clonedOriginalDetails.append(movie);
-  console.log(clonedOriginalDetails);
   appContainer.append(clonedOriginalDetails);
+  return true;
 }
 
 export function renderSettings() {
+  let appContainer = document.querySelector('.appContainer');
   appContainer.innerHTML = '';
   const settings = document.querySelector('#settings');
   const clonedSettingsPage = settings.cloneNode(true);
   const curState = store.getState();
-  console.log(curState);
   if (curState.username) {
     const userNamePtag = clonedSettingsPage.querySelector('.userName');
     userNamePtag.textContent = curState.username;

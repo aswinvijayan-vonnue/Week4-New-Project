@@ -1,10 +1,18 @@
 {
   "devDependencies": {
+    "@babel/core": "^8.0.1",
+    "@babel/preset-env": "^8.0.2",
+    "@types/jest": "^30.0.0",
+    "babel-jest": "^30.4.1",
     "eslint": "^10.7.0",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
     "live-server": "^1.2.2",
     "prettier": "^3.9.5"
   },
   "scripts": {
-    "start": "live-server --entry-file=index.html"
-  }
+    "start": "live-server --entry-file=index.html",
+    "test": "jest --coverage --ci"
+  },
+  "type": "module"
 }

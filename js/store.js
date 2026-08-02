@@ -8,13 +8,13 @@ function createStore(initialState, reducer) {
     dispatch(action) {
       // Update state
       state = reducer(state, action);
-      console.log('state', state);
       localStorage.setItem('store', JSON.stringify(state));
       // Notify subscribers
       listeners.forEach((listener) => listener(state));
     },
     subscribe(listener) {
       listeners.push(listener);
+      return listeners.length;
       // TODO: Return unsubscribe function
     },
   };
@@ -27,7 +27,6 @@ const initialState = {
   },
 };
 function reducer(state, action) {
-  console.log(state);
   switch (action.type) {
     case 'ROUTE_CHANGED':
       return {
@@ -54,11 +53,10 @@ function reducer(state, action) {
       };
 
     default:
-      return state;
+      return { ...state };
   }
 }
 let instance = localStorage.getItem('store');
-console.log(instance);
 let baseState;
 if (instance) {
   baseState = JSON.parse(instance);
@@ -67,7 +65,7 @@ export const store = instance
   ? createStore(baseState, reducer)
   : createStore(initialState, reducer);
 
-function onRouteChange(path, params) {
+export function onRouteChange(path, params) {
   store.dispatch({
     type: 'ROUTE_CHANGED',
     payload: {
@@ -75,6 +73,7 @@ function onRouteChange(path, params) {
       params,
     },
   });
+  return 'Success';
 }
 // store.subscribe((state) => {
 //   console.log(state.route);
