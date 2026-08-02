@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+    <script src="./js/main.js" type="module"></script>
+    <title>Movie Library</title>
+  </head>
+  <body>
+    <header>
+      <h1>Full Movie Library</h1>
+      <nav>
+        <a href="/" class="url-link">Home</a>
+        <a href="/settings" class="url-link">Settings</a>
+        <a href="/movieList" class="url-link">Movies</a>
+      </nav>
+    </header>
+    <div class="pages hidden">
+      <div class="movie">
+        <img
+          src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/adventure-movie-poster-template-design-7b13ea2ab6f64c1ec9e1bb473f345547_screen.jpg?ts=1636999411"
+          alt=""
+        />
+        <p class="movieName">A Night in Casablanca</p>
+        <p class="movieYear">1989</p>
+      </div>
+      <div class="form-container">
+        <div class="formHead">
+          <h3>Add Movie to the list</h3>
+          <button class="close-but">X</button>
+        </div>
+        <form action="">
+          <div class="input-container">
+            <label for="movieName">Movie Name</label>
+            <input type="text" id="movieName" placeholder="Movie Name" name="movie" required />
+          </div>
+          <div class="input-container">
+            <label for="director">Director</label>
+            <input type="text" id="director" name="director" placeholder="Director Name" />
+          </div>
+          <div class="input-container">
+            <label for="year">Year</label>
+            <input type="number" min="1800" name="year" />
+          </div>
+          <div class="input-container">
+            <textarea
+              name="description"
+              id="description"
+              placeholder="Describe your movie"
+            ></textarea>
+          </div>
+          <div></div>
+          <div class="input-container">
+            <button type="submit" class="add-but">Add Movie</button>
+          </div>
+        </form>
+      </div>
+      <div class="detail-card">
+        <h3>movieName</h3>
+      </div>
+      <section id="home" class="fade-in-page">
+        <div class="landing-session">
+          <h1>Welcome to Plex!</h1>
+          <p class="desc">
+            Explore our free movies and TV,plus discover what's trending across your favourite
+            streaming services.
+          </p>
+          <div class="trending">
+            <h2>What On Now</h2>
+            <div class="trending-items">
+              <div class="item">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwbzLxtUPleqeZW5y79Rea9RGAdEm_gHAuw09EW0dKuwQ6h2XJKHVL23g&s=10"
+                  alt=""
+                />
+                <div class="progress-bar">
+                  <div class="progress"></div>
+                </div>
+              </div>
+              <div class="item">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwbzLxtUPleqeZW5y79Rea9RGAdEm_gHAuw09EW0dKuwQ6h2XJKHVL23g&s=10"
+                  alt=""
+                />
+                <div class="progress-bar">
+                  <div class="progress"></div>
+                </div>
+              </div>
+              <div class="item">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwbzLxtUPleqeZW5y79Rea9RGAdEm_gHAuw09EW0dKuwQ6h2XJKHVL23g&s=10"
+                  alt=""
+                />
+                <div class="progress-bar">
+                  <div class="progress"></div>
+                </div>
+              </div>
+              <div class="item">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwbzLxtUPleqeZW5y79Rea9RGAdEm_gHAuw09EW0dKuwQ6h2XJKHVL23g&s=10"
+                  alt=""
+                />
+                <div class="progress-bar">
+                  <div class="progress"></div>
+                </div>
+              </div>
+              <div class="item">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwbzLxtUPleqeZW5y79Rea9RGAdEm_gHAuw09EW0dKuwQ6h2XJKHVL23g&s=10"
+                  alt=""
+                />
+                <div class="progress-bar">
+                  <div class="progress"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="list" class="fade-in-page">
+        <div class="movies-container">
+          <div class="emptyMovie"><p>No Movies yet....</p></div>
+        </div>
+      </section>
+      <section id="settings" class="fade-in-page">
+        <div class="user-info-container">
+          <h2 class="userInformation-header">User Details</h2>
+          <div class="user-container">
+            <p class="userName">user</p>
+            <button class="changeUserName-button">Change username</button>
+          </div>
+          <form action="" class="changeUserNameForm">
+            <input type="text" class="username-field" name="username" />
+            <button type="submit">Apply</button>
+          </form>
+        </div>
+      </section>
+      <section id="details" class="fade-in-page">
+        <div class="single-movie">
+          <h2 class="movieName">This is movie Name</h2>
+          <p class="single-movie-year">1989</p>
+          <img src="" alt="" class="moviePoster" />
+          <p class="movieDesc">aaaaaaa</p>
+          <div class="directorContainer">
+            <div class="directorLabel">Director :</div>
+            <p class="directorName">Abdullah</p>
+          </div>
+          <button class="remove-movie-button">Remove From Library</button>
+        </div>
+      </section>
+    </div>
+    <div class="appContainer"></div>
+  </body>
+</html>
