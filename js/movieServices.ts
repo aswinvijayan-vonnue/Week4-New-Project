@@ -1,18 +1,27 @@
-import { renderList } from './pages.js';
-import { cardComponent } from './components.js';
-import { store } from './store.js';
+import { renderList } from './pages';
+import { cardComponent } from './components';
+import { store } from './store';
+
+type FormDataType = {
+  movie: string;
+  director: string;
+  year: string;
+  description: string;
+};
 
 export function addMovie() {
-  const form = document.querySelector('#movieForm');
+  const form = document.querySelector<HTMLFormElement>('#movieForm');
+  if (!form) throw new Error('Form is not defined');
   const formData = new FormData(form);
-  const objData = Object.fromEntries(formData.entries());
+  const objData = Object.fromEntries(formData.entries()) as FormDataType;
   form.reset();
   const overlay = document.querySelector('.overlay');
+  if (!overlay) throw new Error('Overlay doesnot found');
   overlay.classList.remove('active');
   renderCard(objData);
 }
 
-function renderCard(data) {
+function renderCard(data: FormDataType) {
   const card = cardComponent();
   card.id = `card${Date.now()}`;
   let imgSrc =

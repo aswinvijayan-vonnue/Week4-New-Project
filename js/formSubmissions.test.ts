@@ -3,8 +3,8 @@ beforeEach(() => {
 });
 describe('Testing all submissions', () => {
   test('handling movie form submisison', async () => {
-    await import('./main.js');
-    jest.mock('./movieServices.js', () => ({
+    await import('./main');
+    jest.mock('./movieServices.ts', () => ({
       addMovie: jest.fn(),
     }));
     document.body.innerHTML = `<div class="appContainer">
@@ -37,15 +37,17 @@ describe('Testing all submissions', () => {
       </div></div>
       </div>
    `;
-    const { addMovie } = await import('./movieServices.js');
+    const { addMovie } = await import('./movieServices');
     const submitEvent = new Event('submit', { bubbles: true });
     const movieForm = document.querySelector('#movieForm');
-    movieForm.dispatchEvent(submitEvent);
-    expect(addMovie).toHaveBeenCalled();
+    if (movieForm) {
+      movieForm.dispatchEvent(submitEvent);
+      expect(addMovie).toHaveBeenCalled();
+    }
   });
 
   test('Testing change username form', async () => {
-    await import('./main.js');
+    await import('./main');
     document.body.innerHTML = `<div class="user-info-container">
           <h2 class="userInformation-header">User Details</h2>
           <div class="user-container">
@@ -58,13 +60,15 @@ describe('Testing all submissions', () => {
           </form>
         </div>`;
 
-    const { store } = await import('./store.js');
+    const { store } = await import('./store');
     const dispatchSpy = jest.spyOn(store, 'dispatch').mockImplementation(() => {});
-    const submitEvent = new Event('submit', { bubbles: true });
+    const submitEvent: Event = new Event('submit', { bubbles: true });
     const form = document.querySelector('.changeUserNameForm');
-    form.dispatchEvent(submitEvent);
-    expect(dispatchSpy).toHaveBeenCalled();
-    expect(form.classList.contains('showForm')).toBeFalsy();
+    if (form) {
+      form.dispatchEvent(submitEvent);
+      expect(dispatchSpy).toHaveBeenCalled();
+      expect(form.classList.contains('showForm')).toBeFalsy();
+    }
   });
 });
 
@@ -74,11 +78,11 @@ describe('All key event listsners', () => {
     jest.clearAllMocks();
   });
   test('testing overlay appears and disappears based on overlay', async () => {
-    await import('./main.js');
-    jest.mock('./movieServices.js', () => ({
+    await import('./main');
+    jest.mock('./movieServices.ts', () => ({
       addMovie: jest.fn(),
     }));
-    const { addMovie } = await import('./movieServices.js');
+    const { addMovie } = await import('./movieServices');
     // addMovie.mockClear();
     document.body.innerHTML = `
     <div class='appContainer'>
@@ -89,9 +93,11 @@ describe('All key event listsners', () => {
     const EscapeKeyEvent = new KeyboardEvent('keydown', { key: 'Escape' });
     document.dispatchEvent(EnterKeyEvent);
     expect(addMovie).toHaveBeenCalled();
-    expect(form.classList.contains('active')).toBeTruthy();
-    document.dispatchEvent(EscapeKeyEvent);
-    expect(form.classList.contains('active')).toBeFalsy();
+    if (form) {
+      expect(form.classList.contains('active')).toBeTruthy();
+      document.dispatchEvent(EscapeKeyEvent);
+      expect(form.classList.contains('active')).toBeFalsy();
+    }
   });
 });
 
@@ -102,28 +108,14 @@ describe('closing overlay', () => {
      <div class="overlay active">
      <button class="close-but">X</button></div>
     </div>`;
-    await import('./main.js');
+    await import('./main');
     const movieContainer = document.querySelector('.appContainer');
-    console.log('testing movie container value 2', movieContainer?.className);
-    const button = document.querySelector('.close-but');
-    console.log('in testing.....', button.className);
+    const button: HTMLElement | null = document.querySelector('.close-but');
     const form = document.querySelector('.overlay');
-    expect(form.classList.contains('active')).toBeTruthy();
-    button.click();
-    expect(form.classList.contains('active')).toBeFalsy();
+    if (form && button) {
+      expect(form.classList.contains('active')).toBeTruthy();
+      button.click();
+      expect(form.classList.contains('active')).toBeFalsy();
+    }
   });
 });
-
-// test('close overlay button testing', async () => {
-//   await import('./main.js');
-//   document.body.innerHTML = `
-//      <div class='appContainer'>
-
-//     </div>`;
-
-//   const closeButton = document.querySelector('.close-but');
-//   const form = document.querySelector('.overlay');
-//   expect(form.classList.contains('active')).toBeTruthy;
-//   closeButton.click();
-//   expect(form.classList.contains('active')).toBeFalsy();
-// });

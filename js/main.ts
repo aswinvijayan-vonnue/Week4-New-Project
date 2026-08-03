@@ -1,8 +1,8 @@
-import { register, navigate } from './router.js';
-import { renderHome, renderDetails, renderList, renderSettings } from './pages.js';
-import { cardComponent } from './components.js';
-import { store } from './store.js';
-import { addMovie } from './movieServices.js';
+import { register, navigate } from './router';
+import { renderHome, renderDetails, renderList, renderSettings } from './pages';
+import { cardComponent } from './components';
+import { store } from './store';
+import { addMovie } from './movieServices';
 console.log('main.js executed');
 export default function initRegister() {
   register('/', renderHome);
@@ -14,9 +14,7 @@ initRegister();
 // register('/index.html', renderHome);
 
 window.addEventListener('DOMContentLoaded', () => {
-  console.log('called dom content loaded');
   const url = new URL(window.location.href);
-  console.log(url.pathname);
   store.dispatch({
     type: 'ROUTE_CHANGED',
     payload: {
@@ -33,6 +31,7 @@ anchorTags.forEach((tag) => {
   tag.addEventListener('click', (e) => {
     e.preventDefault();
     const targetPath = tag.getAttribute('href');
+    if (!targetPath) return;
     const url = new URL(targetPath, window.location.origin);
     store.dispatch({
       type: 'ROUTE_CHANGED',
@@ -64,27 +63,29 @@ movieContainer?.addEventListener('click', (e) => {
   console.log('got remove movie button', removeMovieButton);
   const overlay = movieContainer.querySelector('.overlay');
   console.log('overlay is here', overlay?.className);
+  const target = e.target as Element;
 
-  if (e.target.closest('.overlay') !== null) {
-    if (e.target.closest('.close-but')) {
+  if (target.closest('.overlay') !== null) {
+    if (target.closest('.close-but')) {
       console.log('close button clicked');
       const form = document.querySelector('.overlay');
+      if (!form) return;
       form.classList.remove('active');
       return;
     }
   }
-  if (e.target.closest('button')) {
-    if (e.target.closest('button') === addButton) {
+  if (target.closest('button')) {
+    if (target.closest('button') === addButton) {
       console.log('clicked by tester');
       const form = document.querySelector('.overlay');
       if (!form) return;
       form.classList.add('active');
       return;
-    } else if (e.target.closest('button') === changeUserNameButton) {
-      const settingsDiv = e.target.closest('.user-info-container');
-      const changeForm = settingsDiv.querySelector('.changeUserNameForm');
-      changeForm.classList.add('showForm');
-    } else if (e.target.closest('button') === removeMovieButton) {
+    } else if (target.closest('button') === changeUserNameButton) {
+      const settingsDiv = target.closest('.user-info-container');
+      const changeForm = settingsDiv?.querySelector('.changeUserNameForm');
+      changeForm?.classList.add('showForm');
+    } else if (target.closest('button') === removeMovieButton) {
       console.log('inside remove movie button in test');
       const current = store.getState();
       store.dispatch({
@@ -104,9 +105,10 @@ movieContainer?.addEventListener('click', (e) => {
       navigate(toPath);
     }
   }
-  if (e.target.closest('.movie') !== null) {
-    const card = e.target.closest('.movie');
-    const movieId = card.id;
+  if (target.closest('.movie') !== null) {
+    const card = target.closest('.movie');
+    const movieId = card?.id;
+    if (!movieId) return;
     // const allMovies = store.getState().movies;
     // const clickedMovie = allMovies.find((movie) => movie.id == card.id);
 
@@ -126,21 +128,24 @@ movieContainer?.addEventListener('click', (e) => {
 
 document.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (e.target.closest('#movieForm')) {
+  const target = e.target as Element;
+  if (target.closest('#movieForm')) {
     console.log('Form submitted');
     addMovie();
-  } else if (e.target.closest('.changeUserNameForm')) {
-    const form = e.target.closest('.changeUserNameForm');
+  } else if (target.closest('.changeUserNameForm')) {
+    const form = target.closest<HTMLFormElement>('.changeUserNameForm');
+    if (!form) return;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-    console.log('testingg data', data);
-    if (data.username.trim() !== '') {
-      const parentDiv = e.target.closest('.user-info-container');
-      const usernameDiv = parentDiv.querySelector('.userName');
-      usernameDiv.textContent = data.username;
+    const username = data.username as string;
+    if (username && username.trim() !== '') {
+      const parentDiv = target.closest<HTMLElement>('.user-info-container');
+      const usernameDiv = parentDiv?.querySelector<HTMLElement>('.userName');
+      if (!usernameDiv) return;
+      usernameDiv.textContent = username;
       store.dispatch({
         type: 'USER_CHANGED',
-        payload: data.username,
+        payload: username,
       });
     }
     form.classList.remove('showForm');
@@ -150,6 +155,6 @@ document.addEventListener('submit', (e) => {
 
 document.addEventListener('keydown', (e) => {
   const form = document.querySelector('.overlay');
-  if (e.key === 'Enter' && form.classList.contains('active')) addMovie();
-  if (e.key === 'Escape' && form.classList.contains('active')) form.classList.remove('active');
+  if (e.key === 'Enter' && form?.classList.contains('active')) addMovie();
+  if (e.key === 'Escape' && form?.classList.contains('active')) form.classList.remove('active');
 });

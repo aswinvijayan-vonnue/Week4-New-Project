@@ -1,9 +1,12 @@
-export const routes = {};
-export function register(path, component) {
+export type RenderArg = void | string | undefined;
+export type ReturnArg = void | boolean;
+type RenderFunction = (arg: RenderArg) => ReturnArg;
+export const routes: Record<string, RenderFunction> = {};
+export function register(path: string, component: RenderFunction) {
   if (Object.hasOwn(routes, path)) return;
   routes[path] = component;
 }
-export function navigate(path) {
+export function navigate(path: string) {
   if (routes[path]) {
     routes[path]();
     return;
@@ -15,7 +18,7 @@ export function navigate(path) {
   }
   console.log('404:error');
 }
-export function extractSearchPara(path) {
+export function extractSearchPara(path: string) {
   const segments = path.split('/');
   if (segments.length < 3) return false;
   const rawId = segments[segments.length - 1];

@@ -1,4 +1,4 @@
-import { navigate, routes } from './router.js';
+import { navigate, routes } from './router';
 // import { initRegister } from './main.js';
 import fs from 'fs';
 import path from 'path';
@@ -9,24 +9,26 @@ beforeEach(() => {
 });
 
 describe('Router tests', () => {
-  let appContainer;
+  let appContainer: HTMLElement | null;
   beforeEach(async () => {
-    const { default: initRegister } = await import('./main.js');
+    const { default: initRegister } = await import('./main');
     initRegister();
     appContainer = document.querySelector('.appContainer');
   });
 
   test('Asserting correct component is rendered', () => {
     const settingsSpy = jest.spyOn(routes, '/settings');
+    if (!appContainer) throw new Error('App container not found');
     navigate('/settings');
     expect(settingsSpy).toHaveBeenCalled();
     // expect(window.location.pathname).toBe('/movieList');
     const div = appContainer.querySelector('#settings');
+    if (!div) throw new Error('Settings div not found');
     expect(div.id).toBe('settings');
   });
   test('Testing extract search  parameter', async () => {
     const path = 'https://example.com/users/123';
-    const { extractSearchPara } = await import('./router.js');
+    const { extractSearchPara } = await import('./router');
     expect(extractSearchPara(path)).toBe('123');
   });
   test('Testing /details with id', () => {

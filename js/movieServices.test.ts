@@ -7,12 +7,13 @@ beforeEach(() => {
 });
 describe('checking movies services functionalities', () => {
   test('testing add movies functionalities', async () => {
-    jest.mock('./pages.js', () => ({
+    jest.mock('./pages.ts', () => ({
       renderList: jest.fn(),
     }));
     let appContainer = document.querySelector('.appContainer');
-    console.log(appContainer.className);
-    appContainer.innerHTML = `
+    expect(appContainer).not.toBeNull();
+    console.log(appContainer!.className);
+    appContainer!.innerHTML = `
      <div class="overlay active"><div class="form-container">
         <div class="formHead">
           <h3>Add Movie to the list</h3>
@@ -42,14 +43,15 @@ describe('checking movies services functionalities', () => {
       </div></div>
       `;
 
-    const { addMovie } = await import('./movieServices.js');
-    const { store } = await import('./store.js');
-    const { renderList } = await import('./pages.js');
+    const { addMovie } = await import('./movieServices');
+    const { store } = await import('./store');
+    const { renderList } = await import('./pages');
     const dispatchSpy = jest.spyOn(store, 'dispatch').mockImplementation(() => {});
-    const overlay = appContainer.querySelector('.overlay');
+    const overlay = appContainer!.querySelector('.overlay');
     // console.log(overlay.className);
-    expect(overlay.classList.contains('active')).toBeTruthy();
+    expect(overlay).not.toBeNull();
+    expect(overlay!.classList.contains('active')).toBeTruthy();
     addMovie();
-    expect(overlay.classList.contains('active')).toBeFalsy();
+    expect(overlay!.classList.contains('active')).toBeFalsy();
   });
 });
