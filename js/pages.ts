@@ -4,12 +4,13 @@ import type { RenderArg, ReturnArg } from './router';
 
 export function renderHome() {
   let appContainer = document.querySelector('.appContainer');
-  if (!appContainer) return;
+  if (!appContainer) return false;
   appContainer.innerHTML = '';
   const home = document.querySelector('#home');
-  if (!home) return;
+  if (!home) return false;
   const clonedHome = home.cloneNode(true);
   appContainer.append(clonedHome);
+  return true;
 }
 export function renderList() {
   let appContainer = document.querySelector('.appContainer');
@@ -65,7 +66,7 @@ export function renderList() {
 
 export function renderDetails(id: RenderArg = 'abc'): ReturnArg {
   let appContainer = document.querySelector('.appContainer');
-  if (!appContainer) return;
+  if (!appContainer) return false;
   const info = store.getState();
   const movieInfo = info.movies;
   const selectedMovie = movieInfo?.find((movie) => movie.id === id);
@@ -76,13 +77,13 @@ export function renderDetails(id: RenderArg = 'abc'): ReturnArg {
   const clonedOriginalDetails = originalDetails?.cloneNode(true) as HTMLElement;
 
   const movie = clonedOriginalDetails.querySelector('.single-movie');
-  if (!movie) return;
+  if (!movie) return false;
   const movieTitle = movie?.querySelector('.movieName');
-  if (!movieTitle) return;
+  if (!movieTitle) return false;
   movieTitle.textContent = selectedMovie.movie;
 
   const movieYear = movie?.querySelector('.single-movie-year');
-  if (!movieYear) return;
+  if (!movieYear) return false;
   movieYear.textContent = selectedMovie.year;
 
   const poster = movie?.querySelector('.moviePoster');

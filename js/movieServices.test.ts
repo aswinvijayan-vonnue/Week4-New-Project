@@ -54,4 +54,23 @@ describe('checking movies services functionalities', () => {
     addMovie();
     expect(overlay!.classList.contains('active')).toBeFalsy();
   });
+  test('Testing add movie functionality when there is no form', async () => {
+    let appContainer = document.querySelector('.appContainer');
+    appContainer!.innerHTML = ` <div class="overlay"></div>
+    `;
+    const { addMovie } = await import('./movieServices');
+    expect(() => addMovie()).toThrow();
+  });
+  test('Testing add movie functionality when there is no overlay', async () => {
+    let appContainer = document.querySelector('.appContainer');
+    appContainer!.innerHTML = `<form action="" id="movieForm">
+          <div class="input-container">
+            <label for="movieName">Movie Name</label>
+            <input type="text" id="movieName" placeholder="Movie Name" name="movie" required="">
+          </div>
+          </form>
+    `;
+    const { addMovie } = await import('./movieServices');
+    expect(() => addMovie()).toThrow();
+  });
 });

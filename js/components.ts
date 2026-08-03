@@ -5,6 +5,7 @@ export function buttonComponent(): HTMLButtonElement {
 
 export function cardComponent(): HTMLElement {
   const card = document.querySelector<HTMLElement>('.movie');
+  console.log('in testt ', card);
   if (!card) throw new Error('Could not find card element');
   return card;
 }

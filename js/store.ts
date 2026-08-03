@@ -90,9 +90,6 @@ function reducer(state: StateType, action: ActionType) {
         ...state,
         movies: updatedMovies,
       };
-
-    default:
-      return { ...state };
   }
 }
 let inst = localStorage.getItem('store');

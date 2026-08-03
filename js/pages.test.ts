@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { renderDetails, renderHome, renderList, renderSettings } from './pages';
 
 describe('Testing each page rendering', () => {
   let appContainer: HTMLElement | null;
@@ -113,5 +114,34 @@ describe('Testing each page rendering', () => {
     expect(getStateSpy).toHaveBeenCalled();
     expect(appContainer.querySelector('#details')).toBeTruthy();
     expect(renderDetails('mv')).toBeFalsy();
+  });
+});
+
+describe('Testing page rendering in each edge case', () => {
+  test('testing when there is no card element to render', async () => {
+    document.body.innerHTML = `<div class="appContainer"></div>`;
+    const { cardComponent } = await import('./components');
+    expect(() => cardComponent()).toThrow();
+  });
+  test('testing when there is no modal element to render', async () => {
+    document.body.innerHTML = `<div class="appContainer"></div>`;
+    const { modalComponent } = await import('./components');
+    expect(() => modalComponent()).toThrow();
+  });
+  test('testing case when there is no appContainer', async () => {
+    document.body.innerHTML = ``;
+    const components = await import('./components');
+    const butSpy = jest.spyOn(components, 'buttonComponent');
+    await import('./pages');
+    renderList();
+    expect(butSpy).not.toHaveBeenCalled();
+    expect(renderHome()).toBeFalsy();
+    expect(renderDetails()).toBeFalsy();
+    expect(renderSettings()).toBeFalsy();
+  });
+  test('testing case when there is no home div', async () => {
+    document.body.innerHTML = `<div class="appContainer"></div>`;
+    await import('./pages');
+    expect(renderHome()).toBeFalsy();
   });
 });
