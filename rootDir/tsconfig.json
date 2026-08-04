@@ -3,7 +3,7 @@
   "compilerOptions": {
     // File Layout
     "rootDir": "./js",
-    "outDir": "./dist",
+    "outDir": "../dist/js",
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
@@ -36,7 +36,7 @@
 
     // Recommended Options
     "strict": true,
-    "declaration": true,
+    // "declaration": true, made to avoid decleration file
     "paths": {
       "@utils": ["./js/utils"],
       "@components": ["./js/components"]

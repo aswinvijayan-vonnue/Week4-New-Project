@@ -1,0 +1,32 @@
+{
+  "name": "week4-new-project",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/aswinvijayan-vonnue/Week4-New-Project#readme",
+  "bugs": {
+    "url": "https://github.com/aswinvijayan-vonnue/Week4-New-Project/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aswinvijayan-vonnue/Week4-New-Project.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.html",
+  "scripts": {
+    "test": "npx jest",
+    "start": "live-server --entry-file=index.html"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^26.1.2",
+    "happy-dom": "^20.11.1",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^30.4.1",
+    "prettier-plugin-embed": "^0.5.1",
+    "ts-jest": "^29.4.12",
+    "typescript": "^5.9.3",
+    "live-server": "^1.2.2"
+  }
+}
