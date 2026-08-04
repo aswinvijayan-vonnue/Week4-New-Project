@@ -35,7 +35,12 @@
     // "noPropertyAccessFromIndexSignature": true,
 
     // Recommended Options
-    "strict": true
+    "strict": true,
+    "declaration": true,
+    "paths": {
+      "@utils": ["./js/utils"],
+      "@components": ["./js/components"]
+    }
     // "jsx": "react-jsx",
     // "verbatimModuleSyntax": true,
     // "isolatedModules": true

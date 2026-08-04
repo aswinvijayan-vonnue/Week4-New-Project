@@ -1,5 +1,4 @@
-export type RenderArg = void | string | undefined;
-export type ReturnArg = void | boolean;
+import type { RenderArg, ReturnArg } from './types.js';
 type RenderFunction = (arg: RenderArg) => ReturnArg;
 export const routes: Record<string, RenderFunction> = {};
 export function register(path: string, component: RenderFunction) {

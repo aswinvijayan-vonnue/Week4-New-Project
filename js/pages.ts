@@ -1,6 +1,6 @@
 import { buttonComponent, cardComponent, modalComponent } from './components';
 import { store } from './store';
-import type { RenderArg, ReturnArg } from './router';
+import type { RenderArg, ReturnArg } from './types.js';
 
 export function renderHome() {
   let appContainer = document.querySelector('.appContainer');

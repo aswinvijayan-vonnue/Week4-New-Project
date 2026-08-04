@@ -1,4 +1,5 @@
-import { store, onRouteChange, ActionType, MovieType, StateType } from './store';
+import { store, onRouteChange } from './store';
+import type { ActionType, MovieType, StateType } from './types.js';
 // import { navigate } from './router.js';
 import * as fs from 'fs';
 import * as path from 'path';
